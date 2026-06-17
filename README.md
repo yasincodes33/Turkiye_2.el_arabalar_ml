@@ -224,6 +224,80 @@ Kural 4: Global çarpan  → her zaman mevcut (son çare)
 
 ---
 
+## 📉 Kalibrasyon — Grafikler ve Yorumlar
+
+### Kal-0. Medyan Fiyat Trendi
+
+![Fiyat Trendi](grafik_kal0_fiyat_trendi.png)
+
+Eğitim (2025 Ağustos), kalibrasyon (Mayıs–Haziran 2026) ve validasyon (Şubat 2026) dönemlerine ait medyan fiyatlar yan yana gösterilmiştir. 2025'ten 2026'ya geçişte medyan fiyat yaklaşık **%44 artmıştır**. Bu artış modelin sistematik düşük tahmin yapmasının temel nedenidir ve kalibrasyonun neden zorunlu olduğunu tek grafik ile özetlemektedir.
+
+---
+
+### Kal-1. Ham Model Bias Analizi
+
+![Bias Analizi](grafik_kal1_bias_analiz.png)
+
+Üç panel halinde ham modelin kalibrasyon verisindeki sistematik hatası incelenmektedir:
+- **Sol (çarpan dağılımı):** Çarpan = Gerçek / Tahmin. Dağılımın 1.0'ın sağına yığılması modelin %88 araçta düşük tahmin yaptığını gösterir; medyan çarpan ≈ 1.13.
+- **Orta (scatter):** Tahmin noktaları ideal çizginin altında kalmakta — model tutarlı biçimde ucuz bulmaktadır.
+- **Sağ (hata sepetleri):** Hataların büyük çoğunluğu +%10 ile +%25 aralığında yığılmış; bu temporal shift'in boyutunu somutlaştırır.
+
+---
+
+### Kal-2. Marka Bazlı Çarpan Analizi
+
+![Marka Çarpanları](grafik_kal2_marka_carpanlar.png)
+
+**Sol panel:** Her markaya ait medyan kalibrasyon çarpanı, yeşil (n ≥ 10, güvenilir) ve mavi (n ≥ 5, kabul edilebilir) renk kodlarıyla gösterilmiştir. Mercedes-Benz (×1.26) ve Audi (×1.20) en yüksek çarpanlara sahipken Citroen (×1.06) ve Fiat (×1.09) global çarpana en yakın markalardır. Bu fark, farklı markaların 2026'da ne kadar değer kazandığını ortaya koymaktadır.
+
+**Sağ panel:** Örneklem büyüklüğü arttıkça standart hata (SE = σ/√n) hızla düşer. n = 5 eşiğinin üzerinde çarpan güvenilirliği kabul edilebilir düzeye gelir; n = 10'da ise yüksek güven elde edilir.
+
+---
+
+### Kal-3. 4 Senaryo Karşılaştırması
+
+![Senaryo Karşılaştırması](grafik_kal3_senaryo_karsilastirma.png)
+
+Ham model, global çarpan, dönem bazlı, marka bazlı ve marka × dönem hiyerarşik kalibrasyon sonuçları dört metrik üzerinden karşılaştırılmıştır:
+- **MAE:** Ham modelin 145K TL'lik hatası marka bazlı kalibrasyonla ~97K TL'ye (%33 iyileşme) düşmektedir.
+- **MAPE:** %14'ten %10.8'e gerileme.
+- **Bias:** +%13'ten ≈ −%1.5'e — sistematik yönelim neredeyse tamamen düzeltilmektedir.
+- **Düşük/Yüksek tahmin oranı:** %88/%12 dengesizliği %44/%56'ya yaklaşmakta; ideal %50/%50 dengesine ulaşılmaktadır.
+
+---
+
+### Kal-4. Hiyerarşik Kural Dağılımı
+
+![Hiyerarşik Kural](grafik_kal4_hiyerarsik_kural.png)
+
+**Sol panel (pasta):** 980 kalibrasyon aracının hangi kural kademesiyle kalibre edildiği gösterilmektedir. Araçların büyük çoğunluğu `marka` veya `mk_donem` kuralıyla işlenirken yalnızca az sayıda araç `global` fallback'e düşmektedir — bu hiyerarşinin iyi kapsama sağladığının göstergesidir.
+
+**Sağ panel (segment bias):** Ham modelde tüm fiyat segmentlerinde +%10 ile +%15 arasında bias varken, hiyerarşik kalibrasyon sonrasında her segmentte bias ≈ 0'a yaklaşmaktadır. Özellikle 600K–1.2M segmentinde düzeltme en belirgin şekilde görülmektedir.
+
+---
+
+### Kal-5. Test Seti Doğrulaması
+
+![Test Doğrulama](grafik_kal5_test_dogrulama.png)
+
+Kalibrasyon tablosu hesaplanırken hiç kullanılmayan **959 araçlık bağımsız test seti** üzerinde yapılan doğrulama:
+- **Sol (MAE karşılaştırması):** Kalibrasyon ve test setlerindeki MAE değerleri tutarlıdır — model yeni veriye iyi genellemektedir.
+- **Orta (scatter):** Yeşil (kalibre) noktaların ideal çizgiye kırmızı (ham) noktalara göre çok daha yakın toplandığı görülmektedir.
+- **Sağ (düşük/yüksek tahmin sayısı):** Ham modelde 838 araç düşük tahmin edilirken kalibre modelde bu denge 440/519'a yaklaşmakta; sistematik yanlılık ortadan kalkmaktadır.
+
+---
+
+### Kal-6. Final Özet — Kalibrasyon Başarımı
+
+![Final Özet](grafik_kal6_final_ozet.png)
+
+**Sol panel:** Ham model ile marka bazlı kalibrasyonun MAE, MAPE ve düşük tahmin oranı üç göstergede yan yana karşılaştırması. Kalibrasyonun her üç metrikte de belirgin iyileşme sağladığı açıkça görülmektedir.
+
+**Sağ panel:** Hata dağılımı histogramı. Ham modelin dağılımı (kırmızı) sıfırın sağına belirgin biçimde kaymışken, kalibre modelin dağılımı (yeşil) sıfır etrafında simetrik bir şekil almaktadır. Bias: ham +%11.8 → kalibre ≈ −%1.5.
+
+---
+
 ## 🚀 Kurulum
 
 ```bash
@@ -257,4 +331,3 @@ fiyat, kural, carpan = kalibre_et_tek(
 
 **Veri kaynağı:** arabam.com (scraping, 2025–2026)  
 **Model:** RF + GB Ensemble | **Kalibrasyon:** Hiyerarşik çarpan (Haziran 2026)
-#
