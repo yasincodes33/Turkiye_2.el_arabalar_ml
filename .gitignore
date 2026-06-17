@@ -1,0 +1,31 @@
+# Model dosyaları (büyük boyutlu)
+/saved_models/
+/catboost_info/
+*.pkl
+
+# Veri dosyaları (büyük xlsx)
+veriseti.xlsx
+verisetiTemiz.xlsx
+verisetiTemiz2.xlsx
+yeni_arabalar_mayıshaziran.xlsx
+yeni_araba_şubat.xlsx
+yeni_araba_126_adet.xlsx
+tahmin_sonuclari.xlsx
+model_metrikleri.xlsx
+1781045195886_yeni_arabalar_temiz.xlsx
+veriseti_guncel_temiz.xlsx
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Geçici dosyalar
+tempCodeRunnerFile.py
+ModelEgitimi_Optimum.ipynb
+
+# Claude Code
+.claude/
