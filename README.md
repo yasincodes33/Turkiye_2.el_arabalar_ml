@@ -329,5 +329,5 @@ fiyat, kural, carpan = kalibre_et_tek(
 
 ---
 
-**Veri kaynağı:** arabam.com (scraping, 2025–2026)  
+**Veri kaynağı:**(https://www.kaggle.com/datasets/mehmettanriverdi/used-car-prices-dataset-turkey-arabam-com) 
 **Model:** RF + GB Ensemble | **Kalibrasyon:** Hiyerarşik çarpan (Haziran 2026)
