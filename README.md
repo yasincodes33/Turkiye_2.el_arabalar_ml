@@ -206,10 +206,10 @@ Model 2025 verileriyle eğitildi; 2026 piyasasında araç fiyatları ortalama **
 **Hiyerarşik kalibrasyon çarpanı:**
 
 ```
-Kural 1: Marka × Dönem  
-Kural 2: Sadece Marka   
-Kural 3: Sadece Dönem
-Kural 4: Global çarpan  (her zaman mevcut)
+Kural 1: Marka × Dönem  → n ≥ 5 ise kullan  (en spesifik)
+Kural 2: Sadece Marka   → n ≥ 5 ise kullan
+Kural 3: Sadece Dönem   → ay biliniyorsa
+Kural 4: Global çarpan  → her zaman mevcut (son çare)
 ```
 
 **Kalibrasyon sonuçları (959 araç, Şubat 2026 test seti):**
@@ -257,5 +257,5 @@ fiyat, kural, carpan = kalibre_et_tek(
 
 **Veri kaynağı:** arabam.com (scraping, 2025–2026)  
 **Model:** RF + GB Ensemble | **Kalibrasyon:** Hiyerarşik çarpan (Haziran 2026)
-#   T u r k i y e _ 2 . e l _ a r a b a _ m l  
+#   T u r k i y e _ 2 . e l _ a r a b a l a r _ m l  
  
