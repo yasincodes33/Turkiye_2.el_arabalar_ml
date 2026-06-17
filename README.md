@@ -259,4 +259,5 @@ fiyat, kural, carpan = kalibre_et_tek(
 **Model:** RF + GB Ensemble | **Kalibrasyon:** Hiyerarşik çarpan (Haziran 2026)
 #   T u r k i y e _ 2 . e l _ a r a b a l a r _ m l  
  #   T u r k i y e _ 2 . e l _ a r a b a l a r _ m l  
+ #   T u r k i y e _ 2 . e l _ a r a b a l a r _ m l  
  
